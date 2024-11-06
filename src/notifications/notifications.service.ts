@@ -16,7 +16,7 @@ export class NotificationsService {
     private readonly emailService: EmailService,
   ) {}
 
-  // Cron job that runs every 10 seconds to check for price changes in the last hour
+  // Cron job that runs every 5 minutes to check for price changes in the last hour
   @Cron('*/5 * * * *')
   async checkAndSendPriceAlerts() {
     try {
@@ -57,7 +57,7 @@ export class NotificationsService {
           Math.abs(Number(priceChangePercentage)) > 3
         ) {
           await this.emailService.sendAlertEmail(
-            process.env.EMAIL_USER,
+            process.env.TARGET_EMAIL,
             chain,
             latestPrice.price,
           );

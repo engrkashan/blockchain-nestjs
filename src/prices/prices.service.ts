@@ -135,14 +135,6 @@ export class PricesService {
     }
   }
 
-  // Get the latest price for a specific chain
-  private async getLatestPrice(chain: string) {
-    return this.prisma.price.findFirst({
-      where: { chain },
-      orderBy: { createdAt: 'desc' },
-    });
-  }
-
   // Send an email alert for price changes
   private async sendPriceAlertEmail(
     email: string,
