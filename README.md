@@ -1,99 +1,204 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+## Here’s a detailed documentation outline for your Blockchain Price Monitoring and Alert System built with NestJS .
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Blockchain Price Monitoring and Alert System Documentation
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Overview
 
-## Description
+The Blockchain Price Monitoring and Alert System is a NestJS application designed to track cryptocurrency prices (Ethereum and Polygon), set price alerts, and notify users via email when their specified price targets are reached. It also includes functionality for calculating swap rates for Ethereum.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Table of Contents
 
-## Project setup
+1. [Installation](#installation)
+2. [Environment Variables](#environment-variables)
+3. [Application Structure](#application-structure)
+4. [Available Endpoints](#available-endpoints)
+5. [Services](#services)
+6. [Running the Application](#running-the-application)
+7. [Testing API Endpoints](#testing-api-endpoints)
+8. [Scheduler & Background Tasks](#scheduler--background-tasks)
+9. [Error Handling](#error-handling)
+10. [Future Improvements](#future-improvements)
 
-```bash
-$ npm install
-```
+---
 
-## Compile and run the project
+## Installation
 
-```bash
-# development
-$ npm run start
+1.  Clone the Repository:
 
-# watch mode
-$ npm run start:dev
+## bash
+git clone <repository-url>
+cd blockchain-nestjs
 
-# production mode
-$ npm run start:prod
-```
+2.  Install Dependencies:
 
-## Run tests
+## bash
+npm install
 
-```bash
-# unit tests
-$ npm run test
+3.  Set up Docker (Optional):
 
-# e2e tests
-$ npm run test:e2e
+- Ensure Docker is installed and running if you plan to use Docker for a containerized setup.
 
-# test coverage
-$ npm run test:cov
-```
+4.  Run Docker Compose:
 
-## Deployment
+## bash
+docker-compose up --build
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+5.  Run Migrations (for Prisma):
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## bash
+npx prisma migrate dev
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+## Environment Variables
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+The application uses several environment variables stored in a `.env` file in the root directory:
 
-## Resources
+- Database Configuration
+- `DATABASE_URL`: Database connection URL.
+- Email Configuration
+- `EMAIL_HOST`: SMTP host for email notifications.
+- `EMAIL_USER`: Email address for sending notifications.
+- `EMAIL_PASS`: Password for the email account.
+- Blockchain Price API (Moralis)
+- `MORALIS_API_KEY`: API key for accessing the Moralis API.
 
-Check out a few resources that may come in handy when working with NestJS:
+Create a `.env` file with the required variables as shown below:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## .env
+DATABASE_URL=your_database_url
+EMAIL_HOST=smtp.example.com
+EMAIL_USER=your_email@example.com
+EMAIL_PASS=your_email_password
+MORALIS_API_KEY=your_moralis_api_key
 
-## Support
+## Application Structure
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- src/prices : Contains the main business logic for fetching prices, saving data, and handling alerts.
+- src/notifications : Manages email notifications and alert notifications.
+- src/prisma : Database connection and Prisma integration.
+- src/moralis : API configurations and helpers for Moralis API integration.
 
-## Stay in touch
+## Available Endpoints
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 1. Get Hourly Prices
 
-## License
+- Endpoint : `GET /prices/hourly`
+- Description : Retrieves hourly prices from the past 24 hours.
+- Response : Returns a list of prices, ordered by creation time.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### 2. Set Price Alert
+
+- Endpoint : `POST /prices/alert`
+- Description : Sets an alert for a specific price target.
+- Request Body :
+
+json
+{
+"chain": "Ethereum",
+"targetPrice": 2000,
+"email": "user@example.com"
+}
+
+- Response : Confirmation of the alert set with `id`, `chain`, `targetPrice`, `email`.
+
+### 3. Get Swap Rate
+
+- Endpoint : `POST /prices/swap-rate`
+- Description : Calculates the swap rate for Ethereum.
+- Request Body :
+
+json
+{
+"ethAmount": 1.5
+}
+
+- Response :
+
+json
+{
+"btcEquivalent": 0.045,
+"ethFee": 0.045,
+"dollarFee": 0.045
+}
+
+## Services
+
+### 1. PricesService
+
+- Methods :
+- `getHourlyPrices`: Fetches Ethereum and Polygon prices from the last 24 hours.
+- `setAlert`: Sets a price alert for a specified chain and price.
+- `fetchAndSavePrices`: Periodically fetches ETH and Polygon prices and saves them to the database.
+- `checkAndSendPriceAlerts`: Checks if any alerts have been met and sends notifications if necessary.
+- `getSwapRate`: Calculates the equivalent BTC and fees for a given amount of ETH.
+
+### 2. EmailService
+
+- Description : Manages email notifications for price alerts.
+- Methods :
+- `sendEmail`: Sends an email with specified recipient, subject, and message content.
+
+### 3. Scheduler
+
+- Purpose : Fetches and saves prices at regular intervals (e.g., every 5 minutes).
+- Configuration : Scheduled using the `@nestjs/schedule` module.
+
+## Running the Application
+
+To run the application locally:
+
+## bash
+npm run start:dev
+
+With Docker:
+
+## bash
+docker-compose up --build
+
+The server should be accessible at `http://localhost:3000` (or the specified port in your `.env`).
+
+## Testing API Endpoints
+
+To test the API endpoints, use [Postman](https://www.postman.com/) or similar tools. Ensure the server is running and send requests to `http://localhost:3000` or the specified port in your environment variables.
+
+### Example Tests
+
+#### Set an Alert:
+
+- POST `/prices/alert`
+- Body:
+  json
+  {
+  "chain": "Ethereum",
+  "targetPrice": 2000,
+  "email": "user@example.com"
+  }
+
+#### Calculate Swap Rate:
+
+- POST `/prices/swap-rate`
+- Body:
+  json
+  {
+  "ethAmount": 1.5
+  }
+
+## Scheduler & Background Tasks
+
+- The application uses the `@nestjs/schedule` module for periodic tasks.
+- fetchAndSavePrices : Runs every 5 minutes to fetch and save the latest prices for Ethereum and Polygon.
+
+## Error Handling
+
+- Errors are logged and handled using `InternalServerErrorException` and `BadRequestException` from `@nestjs/common`.
+- Error Logs : Important events and errors are logged using the NestJS `Logger` service.
+
+## Future Improvements
+
+- Add Additional Cryptocurrencies : Expand to support more cryptocurrencies.
+- WebSocket Integration : Use WebSockets for real-time price alerts.
+- Historical Price Data : Enhance API to provide historical price analysis and trends.
+- Advanced Notification Options : Support SMS or push notifications in addition to email.
+
+---
+
+This documentation should provide a comprehensive overview for setup, usage, and testing of the Blockchain Price Monitoring and Alert System built with NestJS . Let me know if you need more details on any section!

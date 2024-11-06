@@ -150,9 +150,13 @@ export class PricesService {
 
   async getSwapRate(ethAmount: number) {
     try {
-      const btcEquivalent = ethAmount * 0.03;
+      const ethToBtcRate = await this.getEthToBtcRate(); // fetch or calculate ETH to BTC rate
+      const btcEquivalent = ethAmount * ethToBtcRate;
+
+      // Calculate fees
       const ethFee = ethAmount * 0.03;
       const dollarFee = ethFee * this.getDollarRate();
+
       return { btcEquivalent, ethFee, dollarFee };
     } catch (error) {
       this.logger.error('Error calculating swap rate', error);
@@ -160,8 +164,13 @@ export class PricesService {
     }
   }
 
+  // Helper to fetch ETH to BTC rate (mocked here, ideally an API call)
+  private async getEthToBtcRate() {
+    return 0.03;
+  }
+
   // Helper to get a dollar rate; currently hardcoded to 1 for simplicity
   private getDollarRate() {
-    return 1;
+    return 0.03;
   }
 }
