@@ -51,6 +51,13 @@ export class PricesService {
       const ethPriceData = await this.getEthPrice();
       const polygonPriceData = await this.getPolygonPrice();
 
+      try {
+        const ethPriceData = await this.getEthPrice();
+        console.log(ethPriceData)
+      } catch (error) {
+        this.logger.error('Error fetching ETH price', error);
+      }
+
       await this.savePriceData(ethPriceData);
       await this.checkAndSendPriceAlerts(ethPriceData);
 
@@ -95,12 +102,12 @@ export class PricesService {
   private async getEthPrice() {
     try {
       const response = await Moralis.EvmApi.token.getTokenPrice({
-        include: 'percent_change',
         address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
       });
       return { price: response.raw.usdPrice, chain: 'Ethereum' };
     } catch (error) {
       this.logger.error('Error fetching ETH price', error);
+
       throw new InternalServerErrorException('Failed to fetch Ethereum price');
     }
   }
@@ -150,7 +157,7 @@ export class PricesService {
 
   async getSwapRate(ethAmount: number) {
     try {
-      const ethToBtcRate = await this.getEthToBtcRate(); 
+      const ethToBtcRate = await this.getEthToBtcRate();
       const btcEquivalent = ethAmount * ethToBtcRate;
 
       // Calculate fees
