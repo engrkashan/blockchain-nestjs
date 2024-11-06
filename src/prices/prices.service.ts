@@ -51,13 +51,6 @@ export class PricesService {
       const ethPriceData = await this.getEthPrice();
       const polygonPriceData = await this.getPolygonPrice();
 
-      try {
-        const ethPriceData = await this.getEthPrice();
-        console.log(ethPriceData)
-      } catch (error) {
-        this.logger.error('Error fetching ETH price', error);
-      }
-
       await this.savePriceData(ethPriceData);
       await this.checkAndSendPriceAlerts(ethPriceData);
 
