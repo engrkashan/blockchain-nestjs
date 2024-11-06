@@ -150,7 +150,7 @@ export class PricesService {
 
   async getSwapRate(ethAmount: number) {
     try {
-      const ethToBtcRate = await this.getEthToBtcRate(); // fetch or calculate ETH to BTC rate
+      const ethToBtcRate = await this.getEthToBtcRate(); 
       const btcEquivalent = ethAmount * ethToBtcRate;
 
       // Calculate fees
