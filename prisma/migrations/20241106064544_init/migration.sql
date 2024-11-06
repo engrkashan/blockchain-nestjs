@@ -1,0 +1,32 @@
+-- CreateTable
+CREATE TABLE `Price` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `chain` VARCHAR(191) NOT NULL,
+    `price` DOUBLE NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Alert` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `chain` VARCHAR(191) NOT NULL,
+    `targetPrice` DOUBLE NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `SwapRate` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `ethAmount` DOUBLE NOT NULL,
+    `btcEquivalent` DOUBLE NOT NULL,
+    `ethFee` DOUBLE NOT NULL,
+    `dollarFee` DOUBLE NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
